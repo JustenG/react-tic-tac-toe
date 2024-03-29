@@ -73,9 +73,7 @@ export default function Board({ squares, xIsNext, onPlay, gridSize } : BoardProp
         let squareColors = Array(gridSize * gridSize).fill(null);
         if (winnerData.player && winnerData.winTable) {
             for (let i = 0; i < winnerData.winTable.length; ++i) {
-                if (winnerData.winTable[i]) {
                     squareColors[winnerData.winTable[i]] = WIN_SQAURE_COLOR;
-                }
             }
         }
 

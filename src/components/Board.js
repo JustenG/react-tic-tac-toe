@@ -56,9 +56,7 @@ function Board({ squares, xIsNext, onPlay, gridSize }) {
         let squareColors = Array(gridSize * gridSize).fill(null);
         if (winnerData.player && winnerData.winTable) {
             for (let i = 0; i < winnerData.winTable.length; ++i) {
-                if (winnerData.winTable[i]) {
-                    squareColors[winnerData.winTable[i]] = WIN_SQAURE_COLOR;
-                }
+                squareColors[winnerData.winTable[i]] = WIN_SQAURE_COLOR;
             }
         }
         for (let i = 0; i < gridSize; ++i) {
