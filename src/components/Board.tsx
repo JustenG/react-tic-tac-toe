@@ -1,12 +1,23 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const jsx_runtime_1 = require("react/jsx-runtime");
-const Square_1 = __importDefault(require("./Square"));
+import { bool, func } from 'prop-types';
+import Square from './Square';
+import { boolean, number } from 'yargs';
+
 const WIN_SQAURE_COLOR = "red";
-function calculateWinner(squares) {
+
+type BoardProps = {
+    squares: Array<string>,
+    xIsNext: Boolean, 
+    onPlay: Function, 
+    gridSize: number
+}
+
+type WinnerData = {
+    player?: string,
+    winTable?: number[],
+}
+
+
+function calculateWinner(squares: Array<string>): WinnerData {
     const lines = [
         [0, 1, 2],
         [3, 4, 5],
@@ -23,14 +34,17 @@ function calculateWinner(squares) {
             return { player: squares[a], winTable: lines[i] };
         }
     }
-    return {};
+    return { };
 }
-function Board({ squares, xIsNext, onPlay, gridSize }) {
-    function handleClick(i) {
+
+
+export default function Board({ squares, xIsNext, onPlay, gridSize } : BoardProps) {
+    function handleClick(i: number) {
         console.log('clicked!');
         if (squares[i] || calculateWinner(squares).player) {
             return;
         }
+
         const squaresCache = squares.slice();
         if (xIsNext) {
             squaresCache[i] = "X";
@@ -38,8 +52,10 @@ function Board({ squares, xIsNext, onPlay, gridSize }) {
         else {
             squaresCache[i] = "O";
         }
+
         onPlay(squaresCache, i);
     }
+
     let status;
     let statusValue;
     let winnerData = calculateWinner(squares);
@@ -51,6 +67,7 @@ function Board({ squares, xIsNext, onPlay, gridSize }) {
         status = "Next player: ";
         statusValue = (xIsNext ? "X" : "O");
     }
+
     function renderSquares() {
         let squareStr = [];
         let squareColors = Array(gridSize * gridSize).fill(null);
@@ -61,17 +78,29 @@ function Board({ squares, xIsNext, onPlay, gridSize }) {
                 }
             }
         }
+
         for (let i = 0; i < gridSize; ++i) {
             let row = [];
             for (let j = 0; j < gridSize; ++j) {
                 let index = (i * gridSize) + j;
                 let squareColor = squareColors[index];
-                row.push((0, jsx_runtime_1.jsx)(Square_1.default, { value: squares[index], onSquareClicked: () => handleClick(index), txtColor: squareColor }, index));
+                row.push(<Square key={index} value={squares[index]} onSquareClicked={() => handleClick(index)} txtColor={squareColor} />);
             }
-            squareStr.push((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "board-row" }, { children: row }), i));
+            squareStr.push(<div key={i} className="board-row">{row}</div>);
         }
         return squareStr;
     }
-    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { children: (0, jsx_runtime_1.jsxs)("h2", Object.assign({ className: "text-xl" }, { children: [status, (0, jsx_runtime_1.jsx)("span", Object.assign({ className: "badge badge-lg" }, { children: statusValue }))] })) }), (0, jsx_runtime_1.jsx)("div", { className: "divider" }), renderSquares()] }));
+
+    return (
+        <>
+            <div>
+                <h2 className="text-xl">
+                    {status}
+                    <span className="badge badge-lg">{statusValue}</span>
+                </h2>
+            </div>
+            <div className="divider" />
+            {renderSquares()}
+        </>
+    );
 }
-exports.default = Board;

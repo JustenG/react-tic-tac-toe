@@ -8,7 +8,7 @@ export default function Game() {
     const [history, setHistory] = useState([Array(GRID_SIZE * GRID_SIZE).fill(null)]);
     const [historyTarget, setHistoryTarget] = useState(Array(GRID_SIZE * GRID_SIZE).fill(null));
     const [historyIndex, setHistoryIndex] = useState(0);
-    const squares = history[historyIndex];
+    const squares: Array<string> = history[historyIndex];
     const xIsNext = historyIndex % 2 === 0
 
     function handlePlay(nextSquares: Array<string>, index: number) {
