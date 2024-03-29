@@ -6,7 +6,8 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "tailwind-watch": "tailwindcss build -i src/assets/styles/input.css -o src/assets/styles/output.css --watch"
     },
     "dependencies": {
         "@types/jest": "^29.5.12",
