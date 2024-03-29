@@ -1,6 +1,9 @@
 # TypeScript
 src/**/*.js
 
+#Tailwind
+src/assets/styles/output.css
+
 # Logs
 logs
 *.log

@@ -37,19 +37,19 @@ export default function Game() {
 
             if (move == historyIndex) {
                 description = 'You are at move #' + move + cordStr;
-                element = <div className="chat chat-start"> <div className="chat-bubble">{description}</div></div>;
+                element = <button className="btn btn-wide no-animation bg-gray-600 hover:bg-gray-600">{description}</button>;
             } else {
                 description = 'Go to move #' + move + cordStr;
                 element = <button className="btn btn-wide" onClick={() => jumpTo(move)}>{description}</button>;
             }
 
         } else {
-            if (historyIndex > 0) {
+            if (historyIndex == 0) {
+                description = 'Start Game!';
+                element = <button className="btn btn-wide no-animation bg-gray-600 hover:bg-gray-600">{description}</button>;
+            } else {
                 description = 'Go to game start';
                 element = <button className="btn btn-wide" onClick={() => jumpTo(move)}>{description}</button>;
-            } else {
-                description = 'Start Game!';
-                element = <div className="chat chat-start"> <div className="chat-bubble">{description}</div></div>;
             }
         }
         return (
@@ -65,7 +65,7 @@ export default function Game() {
             <div className="game-board">
                 <Board onPlay={handlePlay} xIsNext={xIsNext} squares={squares} gridSize={GRID_SIZE} />
             </div>
-            <div className="inline-block h-[250px] min-h-[1em] w-0.5 self-stretch bg-neutral-100 dark:bg-white/10 relative left-10"></div>
+            <div className="inline-block h-[250px] min-h-[1em] w-0.5 self-stretch bg-neutral-100 dark:bg-white/10 relative left-5"></div>
             <div className="game-info">
                 <ol>{moves}</ol>
             </div>
