@@ -1,3 +1,6 @@
+# TypeScript
+src/**/*.js
+
 # Logs
 logs
 *.log
